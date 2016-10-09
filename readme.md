@@ -4,14 +4,19 @@ Phaser Debug Tween Plugin
 =========================
 
 ```javascript
-debug.tween(tween, x, y)
 
-debug.tweenData(tweenData, x, y)
+// init: ->
+game.plugins.add(Phaser.Plugin.DebugTween);
 
-debug.tweenDataInfo(tweenData, x, y)
+// render: ->
+game.debug.tween(tween, x, y);
 
-debug.tweenDataValues(tweenData, x, y)
+game.debug.tweenData(tweenData, x, y);
 
-debug.tweenInfo(tween, x, y)
+game.debug.tweenDataInfo(tweenData, x, y);
+
+game.debug.tweenDataValues(tweenData, x, y);
+
+game.debug.tweenInfo(tween, x, y);
 ```
 
