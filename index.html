@@ -1,0 +1,126 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=960, initial-scale=1">
+<style>
+html,body{height: 100%;}
+body{margin: 0; padding: 0; background: #111; color: #eee;}
+</style>
+<title>Phaser Debug Tween plugin example</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/2.6.2/phaser.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.6.0/dat.gui.js"></script>
+<script src="index.js"></script>
+<script>
+
+var Back      = Phaser.Easing.Back;
+var Cubic     = Phaser.Easing.Cubic;
+var Quadratic = Phaser.Easing.Quadratic;
+
+var onDown = function (sprite){
+    sprite.tint = 0xffff00;
+};
+
+var onUp = function (sprite){
+    sprite.tint = 0xffffff;
+    switch (sprite.text) {
+        case "Start"  : this.tween.start()  ; break ;
+        case "Stop"   : this.tween.stop()   ; break ;
+        case "Pause"  : this.tween.pause()  ; break ;
+        case "Resume" : this.tween.resume() ; break ;
+    }
+};
+
+var tweenGui = function (tween){
+    var gui = new dat.GUI;
+    gui.add(tween, "frameBased");
+    gui.add(tween, "loop");
+    gui.add(tween, "pause");
+    gui.add(tween, "repeatAll");
+    gui.add(tween, "repeatCounter").listen();
+    gui.add(tween, "resume");
+    gui.add(tween, "reverse");
+    gui.add(tween, "start");
+    gui.add(tween, "stop");
+    gui.add(tween, "timeScale", 0.5, 2, 0.5);
+    return gui;
+};
+
+new Phaser.Game({
+    antialias: false,
+    width: 960,
+    height: 480,
+    renderer: Phaser.CANVAS,
+    scaleMode: Phaser.ScaleManager.SHOW_ALL,
+    state: {
+        init: function (){
+
+            console.assert(Phaser.Plugin.DebugTween, "Phaser.Plugin.DebugTween");
+
+            this.game.plugins.add(Phaser.Plugin.DebugTween);
+
+            console.assert(this.game.debug.tween, "game.debug.tween");
+            console.assert(this.game.debug.tweenData, "game.debug.tweenData");
+
+        },
+        preload: function (){
+
+            this.load.baseURL = 'http://examples.phaser.io/assets/';
+            this.load.crossOrigin = 'anonymous';
+
+            this.load.image('asuna', 'sprites/asuna_by_vali233.png');
+
+        },
+        create: function (){
+
+            this.sprite = this.add.sprite(100, 200, 'asuna');
+            this.sprite.anchor.set(0.5);
+
+            this.tween = this.add.tween(this.sprite);
+            this.tween
+            .to( { x: 300 }, 1000, Cubic.InOut)
+            .to( { y: 100 },  500, Quadratic.Out)
+            .to( { y: 200 },  500, Quadratic.In)
+            .to( { rotation: 2 * Math.PI }, 1000, Back.Out);
+
+            this.time.events.add(250, function (){
+                this.gui = tweenGui(this.tween);
+            }, this);
+
+            var buttons = this.add.group();
+            buttons.inputEnableChildren = true;
+            buttons.onChildInputDown.add(onDown, this);
+            buttons.onChildInputUp.add(onUp, this);
+            buttons.setAll("input.useHandCursor", true);
+
+            var style = {fill: "white", font: "32px cursive"}
+
+            this.add.text(0, 0, "Start",  style, buttons);
+            this.add.text(0, 0, "Stop",   style, buttons);
+            this.add.text(0, 0, "Pause",  style, buttons);
+            this.add.text(0, 0, "Resume", style, buttons);
+
+            buttons.x = 32;
+            buttons.y = 300;
+            buttons.align(-1, 1, 128, 50);
+
+        },
+        render: function (){
+
+            var debug = this.game.debug;
+            var current = this.tween.timeline[this.tween.current]
+
+            debug.tween(this.tween, 20, 20);
+            debug.tweenInfo(this.tween, 400, 20);
+            debug.tweenDataInfo(current, 650, 20);
+            debug.tweenDataValues(current, 650, 280);
+
+        },
+        shutdown: function (){
+
+            this.gui.destroy();
+
+        }
+    }
+});
+
+</script>
+

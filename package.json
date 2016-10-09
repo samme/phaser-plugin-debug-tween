@@ -1,0 +1,11 @@
+{
+  "name": "phaser-plugin-debug-tween",
+  "version": "0.0.0",
+  "description": "Draws tween timelines and prints tween properties",
+  "main": "index.js",
+  "scripts": {
+    "start": "coffeebar --watch index.coffee"
+  },
+  "author": "samme",
+  "license": "MIT"
+}
