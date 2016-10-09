@@ -1,3 +1,5 @@
+[![Demo](https://samme.github.io/phaser-plugin-debug-tween/screenshot.png)](https://samme.github.io/phaser-plugin-debug-tween/)
+
 Phaser Debug Tween Plugin
 =========================
 
