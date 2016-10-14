@@ -2,6 +2,8 @@
 
 {Phaser} = this
 
+{isArray} = Array
+
 Phaser.Plugin.DebugTween = Object.freeze class DebugTween extends Phaser.Plugin
 
   _arr = []
@@ -90,12 +92,15 @@ Phaser.Plugin.DebugTween = Object.freeze class DebugTween extends Phaser.Plugin
   debugTweenDataValues: (tweenData, x, y) ->
     debug = @game.debug
     {vEnd, vStart} = tweenData
+    {target} = tweenData.parent
     debug.start x, y
-    for prop, val of vStart
+    for prop, valStart of vStart
+      valEnd = vEnd[prop]
+      valEnd = valEnd[valEnd.length - 1] if isArray valEnd
       debug.line "#{prop}:"
-      debug.line "  start:   #{val.toFixed 2}"
-      debug.line "  end:     #{vEnd[prop].toFixed 2}"
-      debug.line "  current: #{tweenData.parent.target[prop].toFixed 2}"
+      debug.line "  start:   #{valStart.toFixed 2}"
+      debug.line "  end:     #{valEnd.toFixed 2}" if typeof valEnd is "number"
+      debug.line "  current: #{target[prop].toFixed 2}"
     debug.stop()
     return
 
