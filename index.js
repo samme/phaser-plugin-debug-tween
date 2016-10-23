@@ -44,7 +44,7 @@
       }
     };
 
-    tweenKeys = "chainedTween current frameBased isPaused isRunning properties repeatCounter reverse target timeScale totalDuration".split(" ");
+    tweenKeys = "chainedTween current frameBased isPaused isRunning pendingDelete properties repeatCounter reverse target timeScale totalDuration".split(" ");
 
     tweenDataKeys = "delay dt duration inReverse interpolate isFrom isRunning percent repeatCounter repeatDelay repeatTotal startTime value yoyo yoyoDelay".split(" ");
 
@@ -93,7 +93,7 @@
         } else if (name === "properties") {
           val = Object.keys(val).join(",");
         } else if (name === "target") {
-          val = val.name || val.key || val.constructor || val;
+          val = val.name || val.key || val.constructor.name || val;
         }
         debug.line(name + ": " + val);
       }

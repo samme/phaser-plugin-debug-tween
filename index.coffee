@@ -21,7 +21,7 @@ Phaser.Plugin.DebugTween = Object.freeze class DebugTween extends Phaser.Plugin
     else if t.isRunning    then colors.GREEN
     else                        colors.GRAY
 
-  tweenKeys = "chainedTween current frameBased isPaused isRunning properties repeatCounter reverse target timeScale totalDuration".split " "
+  tweenKeys = "chainedTween current frameBased isPaused isRunning pendingDelete properties repeatCounter reverse target timeScale totalDuration".split " "
 
   tweenDataKeys = "delay dt duration inReverse interpolate isFrom isRunning percent repeatCounter repeatDelay repeatTotal startTime value yoyo yoyoDelay".split " "
 
@@ -62,7 +62,7 @@ Phaser.Plugin.DebugTween = Object.freeze class DebugTween extends Phaser.Plugin
       else if name is "properties"
         val = Object.keys(val).join ","
       else if name is "target"
-        val = val.name or val.key or val.constructor or val
+        val = val.name or val.key or val.constructor.name or val
       debug.line "#{name}: #{val}"
     debug.stop()
     return
