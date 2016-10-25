@@ -12,6 +12,7 @@ body{margin: 0; padding: 0; background: #111; color: #eee;}
 <script>
 
 var Back      = Phaser.Easing.Back;
+var Bounce    = Phaser.Easing.Bounce;
 var Cubic     = Phaser.Easing.Cubic;
 var Quadratic = Phaser.Easing.Quadratic;
 
@@ -40,14 +41,14 @@ var tweenGui = function (tween){
     gui.add(tween, "reverse");
     gui.add(tween, "start");
     gui.add(tween, "stop");
-    gui.add(tween, "timeScale", 0.5, 2, 0.5);
+    gui.add(tween, "timeScale", 0.25, 2, 0.25);
     return gui;
 };
 
 new Phaser.Game({
     antialias: false,
     width: 960,
-    height: 480,
+    height: 600,
     renderer: Phaser.CANVAS,
     scaleMode: Phaser.ScaleManager.SHOW_ALL,
     state: {
@@ -66,20 +67,25 @@ new Phaser.Game({
             this.load.baseURL = 'http://examples.phaser.io/assets/';
             this.load.crossOrigin = 'anonymous';
 
-            this.load.image('asuna', 'sprites/asuna_by_vali233.png');
+            this.load.image('bunny', 'sprites/bunny.png');
 
         },
         create: function (){
 
-            this.sprite = this.add.sprite(100, 200, 'asuna');
+            var centerX = this.world.centerX;
+            var centerY = this.world.centerY;
+            var TURN = 2 * Math.PI;
+
+            this.sprite = this.add.sprite(centerX, -centerY, 'bunny');
             this.sprite.anchor.set(0.5);
 
-            this.tween = this.add.tween(this.sprite);
-            this.tween
-            .to( { x: 300 }, 1000, Cubic.InOut)
-            .to( { y: 100 },  500, Quadratic.Out)
-            .to( { y: 200 },  500, Quadratic.In)
-            .to( { rotation: 2 * Math.PI }, 1000, Back.Out);
+            this.tween = this.add.tween(this.sprite)
+            .to( { y: centerY }, 1500, Bounce.Out)
+            .to( { rotation: 1 * TURN,  x:  2 * centerX }, 1000, Back.InOut)
+            .to( { rotation: 0,         x:      centerX }, 1000, Back.InOut, false, 500)
+            .to( { alpha: 0, y: 2 * centerY }, 500, Quadratic.In);
+
+            this.tween.timeScale = 0.5;
 
             this.time.events.add(250, function (){
                 this.gui = tweenGui(this.tween);
@@ -99,8 +105,9 @@ new Phaser.Game({
             this.add.text(0, 0, "Resume", style, buttons);
 
             buttons.x = 32;
-            buttons.y = 300;
-            buttons.align(-1, 1, 128, 50);
+            buttons.align(-1, 1, 128, 64);
+            buttons.alignIn(this.game.camera.view, Phaser.BOTTOM_CENTER);
+            console.log(this.game.camera.view, buttons.getBounds(), buttons.children[0].getBounds());
 
         },
         render: function (){
@@ -109,9 +116,9 @@ new Phaser.Game({
             var current = this.tween.timeline[this.tween.current]
 
             debug.tween(this.tween, 20, 20);
-            debug.tweenInfo(this.tween, 400, 20);
-            debug.tweenDataInfo(current, 650, 20);
-            debug.tweenDataValues(current, 650, 280);
+            debug.tweenInfo(this.tween, 480, 20);
+            debug.tweenDataInfo(current, 720, 20);
+            debug.tweenDataValues(current, 720, 280);
 
         },
         shutdown: function (){
