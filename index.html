@@ -16,12 +16,15 @@ var Bounce    = Phaser.Easing.Bounce;
 var Cubic     = Phaser.Easing.Cubic;
 var Quadratic = Phaser.Easing.Quadratic;
 
+var YELLOW = 0xffff00;
+var WHITE  = 0xffffff;
+
 var onDown = function (sprite){
-    sprite.tint = 0xffff00;
+    sprite.tint = YELLOW;
 };
 
 var onUp = function (sprite){
-    sprite.tint = 0xffffff;
+    sprite.tint = WHITE;
     switch (sprite.text) {
         case "Start"  : this.tween.start()  ; break ;
         case "Stop"   : this.tween.stop()   ; break ;
@@ -107,7 +110,6 @@ new Phaser.Game({
             buttons.x = 32;
             buttons.align(-1, 1, 128, 64);
             buttons.alignIn(this.game.camera.view, Phaser.BOTTOM_CENTER);
-            console.log(this.game.camera.view, buttons.getBounds(), buttons.children[0].getBounds());
 
         },
         render: function (){
