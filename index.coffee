@@ -101,6 +101,8 @@ Phaser.Plugin.DebugTween = Object.freeze class DebugTween extends Phaser.Plugin
       debug.line "  start:   #{valStart.toFixed 2}"
       debug.line "  end:     #{valEnd.toFixed 2}" if typeof valEnd is "number"
       debug.line "  current: #{target[prop].toFixed 2}"
+    unless valStart?
+      debug.line "[empty]"
     debug.stop()
     return
 

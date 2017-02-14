@@ -147,6 +147,9 @@
         }
         debug.line("  current: " + (target[prop].toFixed(2)));
       }
+      if (valStart == null) {
+        debug.line("[empty]");
+      }
       debug.stop();
     };
 
