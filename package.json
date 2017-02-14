@@ -7,5 +7,8 @@
     "start": "coffeebar --watch index.coffee"
   },
   "author": "samme",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "phaser": "^2.6.2"
+  }
 }
