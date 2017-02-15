@@ -10,5 +10,8 @@
   "license": "MIT",
   "dependencies": {
     "phaser": "^2.6.2"
+  },
+  "devDependencies": {
+    "coffeebar": "^1.0.0"
   }
 }
