@@ -4,7 +4,9 @@
   "description": "Draws tween timelines and prints tween properties",
   "main": "index.js",
   "scripts": {
-    "start": "coffeebar --watch index.coffee"
+    "start": "coffeebar --watch .",
+    "preversion": "eslint .",
+    "pub": "np --no-cleanup"
   },
   "author": "samme",
   "license": "MIT",
@@ -13,5 +15,20 @@
   },
   "devDependencies": {
     "coffeebar": "^1.0.0"
-  }
+  },
+  "directories": {
+    "example": "example"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/samme/phaser-plugin-debug-tween.git"
+  },
+  "keywords": [
+    "phaser",
+    "phaser-debug"
+  ],
+  "bugs": {
+    "url": "https://github.com/samme/phaser-plugin-debug-tween/issues"
+  },
+  "homepage": "https://github.com/samme/phaser-plugin-debug-tween#readme"
 }
