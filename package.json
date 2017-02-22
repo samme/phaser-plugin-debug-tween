@@ -1,6 +1,6 @@
 {
   "name": "phaser-plugin-debug-tween",
-  "version": "0.3.0",
+  "version": "1.0.0",
   "description": "Draws tween timelines and prints tween properties",
   "main": "index.js",
   "scripts": {
