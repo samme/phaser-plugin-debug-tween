@@ -1,14 +1,16 @@
 [![Demo](https://samme.github.io/phaser-plugin-debug-tween/screenshot.png)](https://samme.github.io/phaser-plugin-debug-tween/)
 
-Phaser Debug Tween Plugin
-=========================
+[Demo](https://samme.github.io/phaser-plugin-debug-tween/)
+
+Use
+---
 
 ```javascript
 
-// init: ->
+// @init: ->
 game.plugins.add(Phaser.Plugin.DebugTween);
 
-// render: ->
+// @render: ->
 game.debug.tween(tween, x, y);
 
 game.debug.tweenData(tweenData, x, y);
