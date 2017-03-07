@@ -4,9 +4,7 @@
 
 {isArray} = Array
 
-Phaser.Plugin.DebugTween = Object.freeze class DebugTween extends Phaser.Plugin
-
-  _arr = []
+Object.freeze class Phaser.Plugin.DebugTween extends Phaser.Plugin
 
   tweenColor = (t) ->
     if      t.pendingDelete then colors.RED
