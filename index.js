@@ -20,8 +20,6 @@
 
     _arr = [];
 
-    _rect = new Phaser.Rectangle;
-
     tweenColor = function(t) {
       if (t.pendingDelete) {
         return colors.RED;
@@ -103,8 +101,7 @@
     DebugTween.prototype.debugTween = function(tween, x, y) {
       var height, i, j, len, ref, t;
       height = (this.HEIGHT + this.MARGIN) * tween.timeline.length;
-      _rect.setTo(x, y, tween.totalDuration / this.SCALE, height);
-      this.game.debug.geom(_rect, tweenColor(tween), false);
+      this.drawRect(x, y, tween.totalDuration / this.SCALE, height, this.game.camera, tweenColor(tween), false);
       if (!tween.pendingDelete) {
         ref = tween.timeline;
         for (i = j = 0, len = ref.length; j < len; i = ++j) {
@@ -120,8 +117,7 @@
       var dur, percent;
       percent = tweenData.percent;
       dur = percent === 0 ? tweenData.duration : tweenData.dt;
-      _rect.setTo(x, y, dur / this.SCALE, this.HEIGHT);
-      this.game.debug.geom(_rect, tweenDataColor(tweenData), true);
+      this.drawRect(x, y, dur / this.SCALE, this.HEIGHT, this.game.camera, tweenDataColor(tweenData), true);
     };
 
     DebugTween.prototype.debugTweenDataInfo = function(tweenData, x, y) {
@@ -155,6 +151,13 @@
 
     DebugTween.prototype.debugTweenInfo = function(tween, x, y) {
       this.debugProps(tween, tweenKeys, x, y);
+    };
+
+    _rect = new Phaser.Rectangle;
+
+    DebugTween.prototype.drawRect = function(x, y, width, height, offset, color, filled) {
+      _rect.setTo(x, y, width, height).offsetPoint(offset);
+      this.game.debug.rectangle(_rect, color, filled);
     };
 
     return DebugTween;

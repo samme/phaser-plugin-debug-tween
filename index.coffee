@@ -8,8 +8,6 @@ Phaser.Plugin.DebugTween = Object.freeze class DebugTween extends Phaser.Plugin
 
   _arr = []
 
-  _rect = new Phaser.Rectangle
-
   tweenColor = (t) ->
     if      t.pendingDelete then colors.RED
     else if t.isPaused      then colors.YELLOW
@@ -69,8 +67,7 @@ Phaser.Plugin.DebugTween = Object.freeze class DebugTween extends Phaser.Plugin
 
   debugTween: (tween, x, y) ->
     height = (@HEIGHT + @MARGIN) * (tween.timeline.length)
-    _rect.setTo x, y, tween.totalDuration / @SCALE, height
-    @game.debug.geom _rect, tweenColor(tween), no
+    @drawRect x, y, tween.totalDuration / @SCALE, height, @game.camera, tweenColor(tween), no
     unless tween.pendingDelete
       for t, i in tween.timeline
         @debugTweenData t, x, y
@@ -81,8 +78,7 @@ Phaser.Plugin.DebugTween = Object.freeze class DebugTween extends Phaser.Plugin
   debugTweenData: (tweenData, x, y) ->
     {percent} = tweenData
     dur = if percent is 0 then tweenData.duration else tweenData.dt
-    _rect.setTo x, y, dur / @SCALE, @HEIGHT
-    @game.debug.geom _rect, tweenDataColor(tweenData), yes
+    @drawRect x, y, dur / @SCALE, @HEIGHT, @game.camera, tweenDataColor(tweenData), yes
     return
 
   debugTweenDataInfo: (tweenData, x, y) ->
@@ -108,4 +104,13 @@ Phaser.Plugin.DebugTween = Object.freeze class DebugTween extends Phaser.Plugin
 
   debugTweenInfo: (tween, x, y) ->
     @debugProps tween, tweenKeys, x, y
+    return
+
+  _rect = new Phaser.Rectangle
+
+  drawRect: (x, y, width, height, offset, color, filled) ->
+    _rect
+      .setTo x, y, width, height
+      .offsetPoint offset
+    @game.debug.rectangle _rect, color, filled
     return
