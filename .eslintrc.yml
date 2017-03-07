@@ -1,0 +1,19 @@
+env:
+  browser: yes
+extends: 'eslint:recommended'
+rules:
+  indent:
+    - 'off'
+  linebreak-style:
+    - error
+    - unix
+  no-shadow:
+    - error
+  no-unused-vars:
+    - error
+  quotes:
+    - error
+    - double
+  strict:
+    - error
+    - function
