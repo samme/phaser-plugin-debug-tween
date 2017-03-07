@@ -1,6 +1,9 @@
+"use strict"
+
+{dat, Phaser} = this
+
 Back = Phaser.Easing.Back
 Bounce = Phaser.Easing.Bounce
-Cubic = Phaser.Easing.Cubic
 Quadratic = Phaser.Easing.Quadratic
 Rectangle = Phaser.Rectangle
 YELLOW = 0xffff00
@@ -13,29 +16,29 @@ onDown = (sprite) ->
 onUp = (sprite) ->
   sprite.tint = WHITE
   switch sprite.text
-    when 'Start'
+    when "Start"
       @tween.start()
-    when 'Stop'
+    when "Stop"
       @tween.stop()
-    when 'Pause'
+    when "Pause"
       @tween.pause()
-    when 'Resume'
+    when "Resume"
       @tween.resume()
   return
 
 tweenGui = (tween) ->
   gui = new (dat.GUI)
-  gui.add tween, 'frameBased'
-  gui.add(tween, 'pendingDelete').listen()
-  gui.add tween, 'loop'
-  gui.add tween, 'pause'
-  gui.add tween, 'repeatAll'
-  gui.add(tween, 'repeatCounter').listen()
-  gui.add tween, 'resume'
-  gui.add tween, 'reverse'
-  gui.add tween, 'start'
-  gui.add tween, 'stop'
-  gui.add tween, 'timeScale', 0.25, 2, 0.25
+  gui.add tween, "frameBased"
+  gui.add(tween, "pendingDelete").listen()
+  gui.add tween, "loop"
+  gui.add tween, "pause"
+  gui.add tween, "repeatAll"
+  gui.add(tween, "repeatCounter").listen()
+  gui.add tween, "resume"
+  gui.add tween, "reverse"
+  gui.add tween, "start"
+  gui.add tween, "stop"
+  gui.add tween, "timeScale", 0.25, 2, 0.25
   gui
 
 new (Phaser.Game)(
@@ -47,26 +50,23 @@ new (Phaser.Game)(
   state:
 
     init: ->
-      console.assert Phaser.Plugin.DebugTween, 'Phaser.Plugin.DebugTween'
       @game.plugins.add Phaser.Plugin.DebugTween
-      console.assert @game.debug.tween, 'game.debug.tween'
-      console.assert @game.debug.tweenData, 'game.debug.tweenData'
       {debug} = @game
-      debug.font = '16px monospace'
+      debug.font = "16px monospace"
       debug.lineHeight = 20
       return
 
     preload: ->
-      @load.baseURL = 'http://examples.phaser.io/assets/'
-      @load.crossOrigin = 'anonymous'
-      @load.image 'bunny', 'sprites/bunny.png'
+      @load.baseURL = "http://examples.phaser.io/assets/"
+      @load.crossOrigin = "anonymous"
+      @load.image "bunny", "sprites/bunny.png"
       return
 
     create: ->
       centerX = @world.centerX
       centerY = @world.centerY
       TURN = 2 * Math.PI
-      @sprite = @add.sprite(centerX, -centerY, 'bunny')
+      @sprite = @add.sprite(centerX, -centerY, "bunny")
       @sprite.anchor.set 0.5
       @tween = @add.tween(@sprite)
         .to
@@ -93,14 +93,14 @@ new (Phaser.Game)(
       buttons.inputEnableChildren = true
       buttons.onChildInputDown.add onDown, this
       buttons.onChildInputUp.add onUp, this
-      buttons.setAll 'input.useHandCursor', true
+      buttons.setAll "input.useHandCursor", true
       style =
-        fill: 'white'
-        font: '32px cursive'
-      @add.text 0, 0, 'Start', style, buttons
-      @add.text 0, 0, 'Stop', style, buttons
-      @add.text 0, 0, 'Pause', style, buttons
-      @add.text 0, 0, 'Resume', style, buttons
+        fill: "white"
+        font: "32px cursive"
+      @add.text 0, 0, "Start", style, buttons
+      @add.text 0, 0, "Stop", style, buttons
+      @add.text 0, 0, "Pause", style, buttons
+      @add.text 0, 0, "Resume", style, buttons
       buttons.x = 32
       buttons.align -1, 1, 120, 90
       buttons.alignIn @game.camera.view, Phaser.TOP_CENTER
@@ -120,10 +120,10 @@ new (Phaser.Game)(
       debug.tweenDataInfo   current, @columns[1].x, @columns[1].y
       debug.tweenDataValues current, @columns[2].x, @columns[2].y
 
-      @debugText 'game.debug.tween(tween, x, y)',               20,            80
-      @debugText 'game.debug.tweenInfo(tween, x, y)',           @columns[0].x, @columns[0].y - 100
-      @debugText 'game.debug.tweenDataInfo(tweenData, x, y)',   @columns[0].x, @columns[0].y - 75
-      @debugText 'game.debug.tweenDataValues(tweenData, x, y)', @columns[0].x, @columns[0].y - 50
+      @debugText "game.debug.tween(tween, x, y)",               20,            80
+      @debugText "game.debug.tweenInfo(tween, x, y)",           @columns[0].x, @columns[0].y - 100
+      @debugText "game.debug.tweenDataInfo(tweenData, x, y)",   @columns[0].x, @columns[0].y - 75
+      @debugText "game.debug.tweenDataValues(tweenData, x, y)", @columns[0].x, @columns[0].y - 50
 
       return
 
@@ -133,6 +133,6 @@ new (Phaser.Game)(
 
     debugText: (text, x, y) ->
       {debug} = @game
-      debug.text text, x, y, '#999', debug.font
+      debug.text text, x, y, "#999", debug.font
       return
 )
