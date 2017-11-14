@@ -41,7 +41,7 @@ tweenGui = (tween) ->
   gui.add tween, "timeScale", 0.25, 2, 0.25
   gui
 
-new (Phaser.Game)(
+window.game = new (Phaser.Game)(
   antialias: no
   width: 960
   height: 1080
@@ -57,9 +57,7 @@ new (Phaser.Game)(
       return
 
     preload: ->
-      @load.baseURL = "http://examples.phaser.io/assets/"
-      @load.crossOrigin = "anonymous"
-      @load.image "bunny", "sprites/bunny.png"
+      @load.image "bunny", "example/bunny.png"
       return
 
     create: ->
@@ -89,31 +87,21 @@ new (Phaser.Game)(
         @gui = tweenGui(@tween)
         return
       ), this
-      buttons = @add.group()
-      buttons.inputEnableChildren = true
-      buttons.onChildInputDown.add onDown, this
-      buttons.onChildInputUp.add onUp, this
-      buttons.setAll "input.useHandCursor", true
-      style =
-        fill: "white"
-        font: "32px cursive"
-      @add.text 0, 0, "Start", style, buttons
-      @add.text 0, 0, "Stop", style, buttons
-      @add.text 0, 0, "Pause", style, buttons
-      @add.text 0, 0, "Resume", style, buttons
-      buttons.x = 32
-      buttons.align -1, 1, 120, 90
-      buttons.alignIn @game.camera.view, Phaser.TOP_CENTER
       @columns = [
         new Rectangle(0,   320, 320, 320).inflate(-20, 0)
         new Rectangle(320, 320, 320, 320).inflate(-20, 0)
         new Rectangle(640, 320, 320, 320).inflate(-20, 0)
       ]
+      @input.onUp.add (-> @tween.start()), this
+      window.tween = @tween
+      console.log "window.tween", @tween
       return
 
     render: ->
       debug = @game.debug
       current = @tween.timeline[@tween.current]
+
+      @debugText "Click to start the tween or → use tween controls →", 20, 20, "#7FDBFF"
 
       debug.tween           @tween,  20,            120
       debug.tweenInfo       @tween,  @columns[0].x, @columns[0].y
@@ -131,8 +119,8 @@ new (Phaser.Game)(
       @gui.destroy()
       return
 
-    debugText: (text, x, y) ->
+    debugText: (text, x, y, color = "#999") ->
       {debug} = @game
-      debug.text text, x, y, "#999", debug.font
+      debug.text text, x, y, color, debug.font
       return
 )

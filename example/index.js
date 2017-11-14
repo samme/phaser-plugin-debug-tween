@@ -55,7 +55,7 @@
     return gui;
   };
 
-  new Phaser.Game({
+  window.game = new Phaser.Game({
     antialias: false,
     width: 960,
     height: 1080,
@@ -70,12 +70,10 @@
         debug.lineHeight = 20;
       },
       preload: function() {
-        this.load.baseURL = "http://examples.phaser.io/assets/";
-        this.load.crossOrigin = "anonymous";
-        this.load.image("bunny", "sprites/bunny.png");
+        this.load.image("bunny", "example/bunny.png");
       },
       create: function() {
-        var TURN, buttons, centerX, centerY, style;
+        var TURN, centerX, centerY;
         centerX = this.world.centerX;
         centerY = this.world.centerY;
         TURN = 2 * Math.PI;
@@ -97,28 +95,18 @@
         this.time.events.add(250, (function() {
           this.gui = tweenGui(this.tween);
         }), this);
-        buttons = this.add.group();
-        buttons.inputEnableChildren = true;
-        buttons.onChildInputDown.add(onDown, this);
-        buttons.onChildInputUp.add(onUp, this);
-        buttons.setAll("input.useHandCursor", true);
-        style = {
-          fill: "white",
-          font: "32px cursive"
-        };
-        this.add.text(0, 0, "Start", style, buttons);
-        this.add.text(0, 0, "Stop", style, buttons);
-        this.add.text(0, 0, "Pause", style, buttons);
-        this.add.text(0, 0, "Resume", style, buttons);
-        buttons.x = 32;
-        buttons.align(-1, 1, 120, 90);
-        buttons.alignIn(this.game.camera.view, Phaser.TOP_CENTER);
         this.columns = [new Rectangle(0, 320, 320, 320).inflate(-20, 0), new Rectangle(320, 320, 320, 320).inflate(-20, 0), new Rectangle(640, 320, 320, 320).inflate(-20, 0)];
+        this.input.onUp.add((function() {
+          return this.tween.start();
+        }), this);
+        window.tween = this.tween;
+        console.log("window.tween", this.tween);
       },
       render: function() {
         var current, debug;
         debug = this.game.debug;
         current = this.tween.timeline[this.tween.current];
+        this.debugText("Click to start the tween or → use tween controls →", 20, 20, "#7FDBFF");
         debug.tween(this.tween, 20, 120);
         debug.tweenInfo(this.tween, this.columns[0].x, this.columns[0].y);
         debug.tweenDataInfo(current, this.columns[1].x, this.columns[1].y);
@@ -131,10 +119,13 @@
       shutdown: function() {
         this.gui.destroy();
       },
-      debugText: function(text, x, y) {
+      debugText: function(text, x, y, color) {
         var debug;
+        if (color == null) {
+          color = "#999";
+        }
         debug = this.game.debug;
-        debug.text(text, x, y, "#999", debug.font);
+        debug.text(text, x, y, color, debug.font);
       }
     }
   });
