@@ -6,25 +6,6 @@ Back = Phaser.Easing.Back
 Bounce = Phaser.Easing.Bounce
 Quadratic = Phaser.Easing.Quadratic
 Rectangle = Phaser.Rectangle
-YELLOW = 0xffff00
-WHITE = 0xffffff
-
-onDown = (sprite) ->
-  sprite.tint = YELLOW
-  return
-
-onUp = (sprite) ->
-  sprite.tint = WHITE
-  switch sprite.text
-    when "Start"
-      @tween.start()
-    when "Stop"
-      @tween.stop()
-    when "Pause"
-      @tween.pause()
-    when "Resume"
-      @tween.resume()
-  return
 
 tweenGui = (tween) ->
   gui = new (dat.GUI)
