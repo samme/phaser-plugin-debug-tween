@@ -22,13 +22,13 @@ Object.freeze class Phaser.Plugin.DebugTween extends Phaser.Plugin
   tweenDataKeys = "delay dt duration inReverse interpolate isFrom isRunning percent repeatCounter repeatDelay repeatTotal startTime value yoyo yoyoDelay".split " "
 
   colors =
-    RED:    "rgba(255,0,0,0.75)"
-    ORANGE: "rgba(255,127,0,0.75)"
-    YELLOW: "rgba(255,255,0,0.75)"
-    GREEN:  "rgba(0,255,0,0.75)"
-    BLUE:   "rgba(0,127,255,0.75)"
-    VIOLET: "rgba(255,0,255,0.75)"
-    GRAY:   "rgba(127,127,127,0.75)"
+    RED:    '#FF4136'
+    ORANGE: '#FF851B'
+    YELLOW: '#FFDC00'
+    GREEN:  '#01FF70'
+    BLUE:   '#0074D9'
+    VIOLET: '#F012BE'
+    GRAY:   '#AAAAAA'
 
   HEIGHT: 15
   MARGIN: 0
