@@ -1,5 +1,7 @@
 *.coffee
 *.html
 *.png
+.eslintrc.yml
+.npmignore
 bower.json
 example/
